@@ -1,2 +1,16 @@
-# rpg-battle
-Back-end for RPG battle application using Java, Spring Boot and Postgres
+# RPG Battle
+Back-end for RPG battle application using Java, Spring Boot and H2 database
+
+### Setup H2 database: 
+The following SQL Scripts should be executed only once in the database:
+
+```` roomsql
+INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
+VALUES ('Warrior', '', 20, 7, 5, 6, 1, 12, CURRENT_TIMESTAMP, 1);
+
+INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
+VALUES ('Barbarian', '', 21, 10, 2, 5, 2, 8, CURRENT_TIMESTAMP, 1);
+
+INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
+VALUES ('Knight', '', 26, 6, 8, 3, 2, 6, CURRENT_TIMESTAMP, 1);
+````
