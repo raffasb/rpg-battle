@@ -28,7 +28,7 @@ public class SwaggerConfig {
     private ApiInfo metaInfo( ) {
 
         ApiInfo apiInfo = new ApiInfo( "RPG Battle",
-                "Back-end for RPG battle application using Java, Spring Boot and PostgreSQL",
+                "Back-end for RPG battle application using Java, Spring Boot and H2 database",
                 "1.0.0",
                 "Terms of Service",
                 new Contact( "Rafael Barros",

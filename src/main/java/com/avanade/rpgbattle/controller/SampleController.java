@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping( value = "sample" )
+@RequestMapping( value = "api/samples" )
 @Api( value = "Sample" )
 @CrossOrigin( origins = "*" )
 public class SampleController {
