@@ -12,6 +12,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.ArrayList;
 
+import static springfox.documentation.builders.PathSelectors.regex;
+
 @Configuration
 public class SwaggerConfig {
 
@@ -20,7 +22,7 @@ public class SwaggerConfig {
         return new Docket( DocumentationType.SWAGGER_2 )
                 .select( )
                 .apis( RequestHandlerSelectors.any() )
-                .paths( PathSelectors.any() )
+                .paths( regex( "/api.*" ) )
                 .build( )
                 .apiInfo( metaInfo( ) );
     }
