@@ -1,7 +1,7 @@
 package com.avanade.rpgbattle.controller;
 
-import com.avanade.rpgbattle.model.Hero;
-import com.avanade.rpgbattle.service.HeroService;
+import com.avanade.rpgbattle.model.Battle;
+import com.avanade.rpgbattle.service.BattleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -16,71 +16,71 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
-@RequestMapping( value = "api/heroes" )
-@Api( value = "Heroes", consumes = "application/json", produces = "application/json" )
+@RequestMapping( value = "api/battles" )
+@Api( value = "Battles", consumes = "application/json", produces = "application/json" )
 @CrossOrigin( origins = "*" )
-public class HeroesController {
+public class BattlesController {
 
     @Autowired
-    private HeroService service;
+    private BattleService service;
 
     @GetMapping( "" )
-    @ApiOperation( "Find all heroes" )
+    @ApiOperation( "Find all battles" )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Return all items"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity<List<Hero>> getAll( ) {
+    public ResponseEntity<List<Battle>> getAll( ) {
         return new ResponseEntity<>( service.findAll( ), HttpStatus.OK );
     }
 
     @GetMapping( "{id}" )
-    @ApiOperation( "Find a hero by its identifier" )
+    @ApiOperation( "Find a battle by its identifier" )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Return the item by its identifier"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< Hero > getById( @Valid @PathVariable( value = "id" ) @Min(1) Long heroId ) {
-        return new ResponseEntity<>( service.findById( heroId ), HttpStatus.OK );
+    public ResponseEntity< Battle > getById( @Valid @PathVariable( value = "id" ) @Min(1) Long battleId ) {
+        return new ResponseEntity<>( service.findById( battleId ), HttpStatus.OK );
     }
 
     @PostMapping( "" )
-    @ApiOperation( "Create a hero" )
+    @ApiOperation( "Create a battle" )
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Return the created item"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< Hero > create( @Valid @RequestBody Hero hero ) {
-        return new ResponseEntity<>( service.create( hero ), HttpStatus.CREATED );
+    public ResponseEntity< Battle > create( @Valid @RequestBody Battle battle ) {
+        return new ResponseEntity<>( service.create( battle ), HttpStatus.CREATED );
     }
 
-    @PutMapping( "" )
-    @ApiOperation( "Update a hero" )
+    @PostMapping( "initiative" )
+    @ApiOperation( "Define a initiative" )
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Return the item"),
+        @ApiResponse(code = 200, message = "Return the created item"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< Hero > update( @Valid @RequestBody Hero hero ) {
-        return new ResponseEntity<>( service.update( hero ), HttpStatus.OK );
+    public ResponseEntity< Battle > initiative( @Valid @RequestBody Battle battle ) {
+        return new ResponseEntity<>( service.create( battle ), HttpStatus.OK );
     }
 
-    @DeleteMapping( "" )
-    @ApiOperation( "Delete a hero" )
-    @ApiResponses(value = {
-        @ApiResponse(code = 204, message = "No content to return"),
-        @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
-        @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
-        @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
-    })
-    public ResponseEntity< HttpStatus > delete( @Valid @RequestHeader Long heroId ) {
-        service.delete( heroId );
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT );
-    }
+//    @PutMapping( "" )
+//    @ApiOperation( "Update a hero" )
+//    public ResponseEntity< Hero > update( @RequestBody Hero hero ) {
+//        return new ResponseEntity<>( service.update( hero ), HttpStatus.OK );
+//    }
+//
+//    @DeleteMapping( "" )
+//    @ApiOperation( "Delete a hero" )
+//    public ResponseEntity< HttpStatus > delete( @RequestHeader Long heroId ) {
+//        service.delete( heroId );
+//        return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+//    }
 }

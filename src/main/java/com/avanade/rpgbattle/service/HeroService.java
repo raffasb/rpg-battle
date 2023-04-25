@@ -6,16 +6,19 @@ import com.avanade.rpgbattle.model.Hero;
 import com.avanade.rpgbattle.repository.IHeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Validated
 public class HeroService {
     @Autowired
     private IHeroRepository repository;
 
-    public Hero create( Hero hero ) {
+    public Hero create( @Valid Hero hero ) {
         hero.setCreatedAt( LocalDateTime.now( ) );
         hero.setIsSystemGenerated( false );
 
@@ -36,12 +39,10 @@ public class HeroService {
         repository.deleteById( id );
     }
 
-    public Hero update(Hero hero ) {
+    public Hero update( @Valid Hero hero ) {
         if ( hero.getId( ) == null ) {
             throw new InvalidInputException( "There is no hero with the specified ID" );
         }
         return repository.save( hero );
     }
 }
-
-

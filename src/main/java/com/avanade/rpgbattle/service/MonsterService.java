@@ -6,16 +6,19 @@ import com.avanade.rpgbattle.model.Monster;
 import com.avanade.rpgbattle.repository.IMonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Validated
 public class MonsterService {
     @Autowired
     private IMonsterRepository repository;
 
-    public Monster create(Monster monster ) {
+    public Monster create( @Valid Monster monster ) {
         monster.setCreatedAt( LocalDateTime.now( ) );
         monster.setIsSystemGenerated( false );
 
@@ -36,13 +39,10 @@ public class MonsterService {
         repository.deleteById( id );
     }
 
-    public Monster update(Monster monster ) {
+    public Monster update( @Valid Monster monster ) {
         if ( monster.getId( ) == null ) {
             throw new InvalidInputException( "There is no monster with the specified ID" );
         }
         return repository.save( monster );
     }
 }
-
-
-

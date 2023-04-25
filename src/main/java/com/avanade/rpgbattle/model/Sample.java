@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data
@@ -13,7 +14,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 public class Sample implements Serializable {
+
     @Id
     private Long id;
+
+    @NotBlank(message = "Name is mandatory")
     private String name;
 }
