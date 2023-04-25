@@ -1,10 +1,15 @@
 # RPG Battle
-Back-end for RPG battle application using Java, Spring Boot and H2 database
+Back-end for RPG battle application using Java, Spring Boot and H2 database.
 
-### Setup H2 database: 
-The following SQL Scripts should be executed only once in the database:
+---
 
-```` roomsql
+![Cover: API REST Java Spring Boot](/assets/images/cover.png)
+
+### How to setup H2 database: 
+The following SQL Scripts should be executed only once in the database in order to preload the characters:
+
+* Heroes:
+```` sql
 INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
 VALUES ('Warrior', '', 20, 7, 5, 6, 1, 12, CURRENT_TIMESTAMP, 1);
 
@@ -13,4 +18,16 @@ VALUES ('Barbarian', '', 21, 10, 2, 5, 2, 8, CURRENT_TIMESTAMP, 1);
 
 INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
 VALUES ('Knight', '', 26, 6, 8, 3, 2, 6, CURRENT_TIMESTAMP, 1);
+````
+
+* Monsters:
+```` sql
+INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED) 
+VALUES ('Orc', '', 42, 7, 1, 2, 3, 4, CURRENT_TIMESTAMP, 1);
+
+INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED) 
+VALUES ('Giant', '', 34, 10, 4, 4, 2, 6, CURRENT_TIMESTAMP, 1);
+
+INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH, STRENGTH, DEFENSE, AGILITY, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED) 
+VALUES ('Werewolf', '', 34, 7, 4, 7, 2, 4, CURRENT_TIMESTAMP, 1);
 ````
