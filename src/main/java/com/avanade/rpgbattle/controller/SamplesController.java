@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping( value = "api/samples" )
-@Api( value = "Sample" )
+@Api( value = "Samples" )
 @CrossOrigin( origins = "*" )
-public class SampleController {
+public class SamplesController {
 
     @Autowired
     private SampleService service;

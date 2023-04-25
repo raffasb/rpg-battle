@@ -13,9 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping( value = "api/heroes" )
-@Api( value = "Hero" )
+@Api( value = "Heroes" )
 @CrossOrigin( origins = "*" )
-public class HeroController {
+public class HeroesController {
 
     @Autowired
     private HeroService service;
