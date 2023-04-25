@@ -21,7 +21,7 @@ public class SampleController {
     private SampleService service;
 
     @GetMapping( "" )
-    @ApiOperation( "Return the sample message" )
+    @ApiOperation( "Return just a sample static message" )
     public ResponseEntity<String> sample( ) {
         return new ResponseEntity<>( "This is the sample message", HttpStatus.OK );
     }
