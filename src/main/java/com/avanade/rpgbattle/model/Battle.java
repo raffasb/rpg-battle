@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table( name = "MONSTERS" )
+@Table( name = "BATTLES" )
 @Entity
-public class Monster implements Serializable {
+public class Battle implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -28,28 +28,27 @@ public class Monster implements Serializable {
     @Column( name = "DESCRIPTION" )
     private String description;
 
-    @Column( name = "HEALTH", nullable = false )
-    private int health;
-
-    @Column( name = "STRENGTH", nullable = false )
-    private int strength;
-
-    @Column( name = "DEFENSE", nullable = false )
-    private int defense;
-
-    @Column( name = "AGILITY", nullable = false )
-    private int agility;
-
-    @Column( name = "DICE_QUANTITY", nullable = false )
-    private int diceQuantity;
-
-    @Column( name = "DICE_FACES", nullable = false )
-    private int diceFaces;
+//    @Column( name = "HEALTH", nullable = false )
+//    private int health;
+//
+//    @Column( name = "STRENGTH", nullable = false )
+//    private int strength;
+//
+//    @Column( name = "DEFENSE", nullable = false )
+//    private int defense;
+//
+//    @Column( name = "AGILITY", nullable = false )
+//    private int agility;
+//
+//    @Column( name = "DICE_QUANTITY", nullable = false )
+//    private int diceQuantity;
+//
+//    @Column( name = "DICE_FACES", nullable = false )
+//    private int diceFaces;
 
     @Column( name = "CREATED_AT", nullable = false )
     private LocalDateTime createdAt;
 
-    @Column( name = "IS_SYSTEM_GENERATED", nullable = false )
-    private Boolean isSystemGenerated;
+//    @Column( name = "IS_SYSTEM_GENERATED", nullable = false )
+//    private Boolean isSystemGenerated;
 }
-

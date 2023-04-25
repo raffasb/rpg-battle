@@ -1,7 +1,7 @@
 package com.avanade.rpgbattle.controller;
 
-import com.avanade.rpgbattle.model.Monster;
-import com.avanade.rpgbattle.service.MonsterService;
+import com.avanade.rpgbattle.model.Hero;
+import com.avanade.rpgbattle.service.HeroService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -16,71 +16,71 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
-@RequestMapping( value = "api/monsters" )
-@Api( value = "Monster", consumes = "application/json", produces = "application/json" )
+@RequestMapping( value = "api/heroes" )
+@Api( value = "Heroes", consumes = "application/json", produces = "application/json" )
 @CrossOrigin( origins = "*" )
-public class MonstersController {
+public class HeroesController {
 
     @Autowired
-    private MonsterService service;
+    private HeroService service;
 
     @GetMapping( "" )
-    @ApiOperation( "Find all monsters" )
+    @ApiOperation( "Find all heroes" )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Return all items"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity<List< Monster >> getAll( ) {
+    public ResponseEntity<List<Hero>> getAll( ) {
         return new ResponseEntity<>( service.findAll( ), HttpStatus.OK );
     }
 
     @GetMapping( "{id}" )
-    @ApiOperation( "Find a monster by its identifier" )
+    @ApiOperation( "Find a hero by its identifier" )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Return the item by its identifier"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< Monster > getById( @Valid @PathVariable( value = "id" ) @Min(1) Long monsterId ) {
-        return new ResponseEntity<>( service.findById( monsterId ), HttpStatus.OK );
+    public ResponseEntity< Hero > getById( @Valid @PathVariable( value = "id" ) @Min(1) Long heroId ) {
+        return new ResponseEntity<>( service.findById( heroId ), HttpStatus.OK );
     }
 
     @PostMapping( "" )
-    @ApiOperation( "Create a monster" )
+    @ApiOperation( "Create a hero" )
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Return the created item"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< Monster > create( @Valid @RequestBody Monster monster ) {
-        return new ResponseEntity<>( service.create( monster ), HttpStatus.CREATED );
+    public ResponseEntity< Hero > create( @Valid @RequestBody Hero hero ) {
+        return new ResponseEntity<>( service.create( hero ), HttpStatus.CREATED );
     }
 
     @PutMapping( "" )
-    @ApiOperation( "Update a monster" )
+    @ApiOperation( "Update a hero" )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Return the item"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< Monster > update( @Valid @RequestBody Monster monster ) {
-        return new ResponseEntity<>( service.update( monster ), HttpStatus.OK );
+    public ResponseEntity< Hero > update( @Valid @RequestBody Hero hero ) {
+        return new ResponseEntity<>( service.update( hero ), HttpStatus.OK );
     }
 
     @DeleteMapping( "" )
-    @ApiOperation( "Delete a monster" )
+    @ApiOperation( "Delete a hero" )
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No content to return"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< HttpStatus > delete( @Valid @RequestHeader Long monsterId ) {
-        service.delete( monsterId );
+    public ResponseEntity< HttpStatus > delete( @Valid @RequestHeader Long heroId ) {
+        service.delete( heroId );
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
     }
 }

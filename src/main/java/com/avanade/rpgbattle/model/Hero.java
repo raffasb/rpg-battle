@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,6 +21,7 @@ public class Hero implements Serializable {
     @Column( name = "ID", nullable = false )
     private Long id;
 
+    @NotBlank(message = "Name is mandatory")
     @Column( name = "NAME", nullable = false )
     private String name;
 
