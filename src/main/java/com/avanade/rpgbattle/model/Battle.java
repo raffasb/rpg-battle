@@ -1,5 +1,7 @@
 package com.avanade.rpgbattle.model;
 
+import com.avanade.rpgbattle.enumeration.CharacterType;
+import com.avanade.rpgbattle.enumeration.PlayerType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,27 +30,39 @@ public class Battle implements Serializable {
     @Column( name = "DESCRIPTION" )
     private String description;
 
-//    @Column( name = "HEALTH", nullable = false )
-//    private int health;
-//
-//    @Column( name = "STRENGTH", nullable = false )
-//    private int strength;
-//
-//    @Column( name = "DEFENSE", nullable = false )
-//    private int defense;
-//
-//    @Column( name = "AGILITY", nullable = false )
-//    private int agility;
-//
-//    @Column( name = "DICE_QUANTITY", nullable = false )
-//    private int diceQuantity;
-//
-//    @Column( name = "DICE_FACES", nullable = false )
-//    private int diceFaces;
+    @Column( name = "PLAYER1_NAME" )
+    private String player1Name;
+
+    @Column( name = "PLAYER2_NAME" )
+    private String player2Name;
+
+    @Enumerated(EnumType.STRING)
+    @Column( name = "PLAYER1_CHARACTER_TYPE", nullable = false )
+    private CharacterType player1CharacterType;
+
+    @Enumerated(EnumType.STRING)
+    @Column( name = "PLAYER2_CHARACTER_TYPE", nullable = false )
+    private CharacterType player2CharacterType;
+
+    @Column( name = "PLAYER1_CHARACTER_ID", nullable = false )
+    private Long player1CharacterId;
+
+    @Column( name = "PLAYER2_CHARACTER_ID", nullable = false )
+    private Long player2CharacterId;
+
+    @Enumerated(EnumType.STRING)
+    @Column( name = "INITIATIVE" )
+    private PlayerType initiative;
 
     @Column( name = "CREATED_AT", nullable = false )
     private LocalDateTime createdAt;
 
-//    @Column( name = "IS_SYSTEM_GENERATED", nullable = false )
-//    private Boolean isSystemGenerated;
+    @Column( name = "COMPLETED_AT" )
+    private LocalDateTime completedAt;
+
+    @Column( name = "IS_FINISHED", nullable = false )
+    private Boolean isFinished;
+
+    @Column( name = "WINNER" )
+    private String winner;
 }

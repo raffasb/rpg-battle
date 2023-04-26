@@ -10,8 +10,8 @@ import javax.validation.Valid;
 @Validated
 public class DiceService {
 
-    public int throwDices( @Valid Dice dice ) {
-
+    public int throwDices( @Valid Dice dice )
+    {
         int result = 0;
 
         int maximumNumberOfFaces = dice.getNumberOfFaces();
@@ -21,6 +21,8 @@ public class DiceService {
         {
             result += (int)Math.floor(Math.random() * (maximumNumberOfFaces - minimumNumberOfFaces + 1) + minimumNumberOfFaces);
         }
+
+        dice.setDiceValue(result);
 
         return result;
     }
