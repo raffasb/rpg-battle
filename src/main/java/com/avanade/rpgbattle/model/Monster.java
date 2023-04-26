@@ -28,17 +28,17 @@ public class Monster implements Serializable {
     @Column( name = "DESCRIPTION" )
     private String description;
 
-    @Column( name = "HEALTH", nullable = false )
-    private int health;
+    @Column( name = "HEALTH_POINTS", nullable = false )
+    private int healthPoints;
 
-    @Column( name = "STRENGTH", nullable = false )
-    private int strength;
+    @Column( name = "STRENGTH_POINTS", nullable = false )
+    private int strengthPoints;
 
-    @Column( name = "DEFENSE", nullable = false )
-    private int defense;
+    @Column( name = "DEFENSE_POINTS", nullable = false )
+    private int defensePoints;
 
-    @Column( name = "AGILITY", nullable = false )
-    private int agility;
+    @Column( name = "AGILITY_POINTS", nullable = false )
+    private int agilityPoints;
 
     @Column( name = "DICE_QUANTITY", nullable = false )
     private int diceQuantity;
