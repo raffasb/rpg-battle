@@ -32,7 +32,7 @@ public class SwaggerConfig {
         ApiInfo apiInfo = new ApiInfo( "RPG Battle",
                 "Back-end for RPG battle application using Java, Spring Boot and H2 database",
                 "1.0.0",
-                "Terms of Service",
+                "https://en.wikipedia.org/wiki/Terms_of_service",
                 new Contact( "Rafael Barros",
                 "https://github.com/raffasb",
                 "r.barros.dos.santos@avanade.com" ),
