@@ -10,5 +10,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BattleDamageResponse implements Serializable {
-    private int totalDamageValue;
+    private Integer totalDamageValue;
 }

@@ -10,12 +10,12 @@ import javax.validation.Valid;
 @Validated
 public class DiceService {
 
-    public int throwDices( @Valid Dice dice )
+    public Integer throwDices( @Valid Dice dice )
     {
-        int result = 0;
+        Integer result = 0;
 
-        int maximumNumberOfFaces = dice.getNumberOfFaces();
-        int minimumNumberOfFaces = 1;
+        Integer maximumNumberOfFaces = dice.getNumberOfFaces();
+        Integer minimumNumberOfFaces = 1;
 
         for (int i = 0; i < dice.getQuantityOfDices(); i++)
         {

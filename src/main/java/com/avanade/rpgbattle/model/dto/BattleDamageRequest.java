@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -13,13 +14,22 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BattleDamageRequest implements Serializable {
 
-    @Min(1)
-    private int attackerDicesValue;
-
+    @NotNull
     private PlayerType attacker;
 
+    @NotNull
     @Min(1)
-    private int defenderDicesValue;
+    private Integer attackerDicesValue;
 
-    private PlayerType defender;
+    @NotNull
+    @Min(1)
+    private Integer totalAttackValue;
+
+    @NotNull
+    @Min(1)
+    private Integer defenderDicesValue;
+
+    @NotNull
+    @Min(1)
+    private Integer totalDefenseValue;
 }

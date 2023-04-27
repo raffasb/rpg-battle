@@ -30,9 +30,11 @@ public class BattleCreateRequest implements Serializable {
     @NotNull(message = "Player2 Character Type is mandatory")
     private CharacterType player2CharacterType;
 
+    @NotNull
     @Min(1)
     private Long player1CharacterId;
 
+    @NotNull
     @Min(1)
     private Long player2CharacterId;
 }

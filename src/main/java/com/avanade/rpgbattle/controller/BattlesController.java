@@ -73,7 +73,7 @@ public class BattlesController {
     }
 
     @PostMapping( "{id}/attack" )
-    @ApiOperation( "Perform an attack on your opponent in the battle" )
+    @ApiOperation( "Calculate the attack value on your opponent in the battle" )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Return the item"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
@@ -86,7 +86,7 @@ public class BattlesController {
     }
 
     @PostMapping( "{id}/defense" )
-    @ApiOperation( "Perform a defense from your opponent in the battle" )
+    @ApiOperation( "Calculate the defense value from your opponent in the battle" )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Return the item"),
         @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),

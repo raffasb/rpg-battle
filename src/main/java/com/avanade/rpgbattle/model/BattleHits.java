@@ -42,6 +42,12 @@ public class BattleHits implements Serializable {
     @Column( name = "PLAYER2_STRENGTH_POINTS", nullable = false )
     private int player2StrengthPoints;
 
+    @Column( name = "TOTAL_ATTACK_VALUE" )
+    private Integer totalAttackValue;
+
+    @Column( name = "TOTAL_DEFENSE_VALUE" )
+    private Integer totalDefenseValue;
+
     @Column( name = "PLAYER1_DICES_VALUE" )
     private Integer player1DicesValue;
 
