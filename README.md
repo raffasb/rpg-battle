@@ -10,10 +10,6 @@ Back-end for RPG battle application using Java, Spring Boot and H2 database.
 - IntelliJ IDEA Community Edition (suggested)
 - H2 Database (automatically created when application is started)
 
-## How to access the back-end:
-- Swagger: http://localhost:8080/swagger-ui/index.html
-- H2 database: http://localhost:8080/h2
-
 ## How to run the back-end application:
 - Clone the source code to your local workspace
 - Open the project in your IDE
@@ -21,6 +17,10 @@ Back-end for RPG battle application using Java, Spring Boot and H2 database.
 - Set up the startup settings to point out to the class ```com.avanade.rpgbattle.RpgbattleApplication```
 - Run the application in your IDE
 - *Note: If it is the first time you are running the application, please also follow the steps mentioned in the section "How to load initial settings in the H2 database"*
+
+## How to access the back-end:
+- Swagger: http://localhost:8080/swagger-ui/index.html
+- H2 database: http://localhost:8080/h2
 
 ## How to play the game:
 
@@ -65,34 +65,34 @@ The following SQL Scripts should be executed only once in the database in order 
 - Heroes:
 ```` sql
 INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
-VALUES ('Warrior', '', 20, 7, 5, 6, 1, 12, CURRENT_TIMESTAMP, 1);
+VALUES ('Warrior', 'Brave and loyal', 20, 7, 5, 6, 1, 12, CURRENT_TIMESTAMP, 1);
 
 INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
-VALUES ('Barbarian', '', 21, 10, 2, 5, 2, 8, CURRENT_TIMESTAMP, 1);
+VALUES ('Barbarian', 'Slow but very strong', 21, 10, 2, 5, 2, 8, CURRENT_TIMESTAMP, 1);
 
 INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
-VALUES ('Knight', '', 26, 6, 8, 3, 2, 6, CURRENT_TIMESTAMP, 1);
+VALUES ('Knight', 'Protector of the kingdom', 26, 6, 8, 3, 2, 6, CURRENT_TIMESTAMP, 1);
 ````
 
 - Monsters:
 ```` sql
 INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED) 
-VALUES ('Orc', '', 42, 7, 1, 2, 3, 4, CURRENT_TIMESTAMP, 1);
+VALUES ('Orc', 'Evil and fearless', 42, 7, 1, 2, 3, 4, CURRENT_TIMESTAMP, 1);
 
 INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED) 
-VALUES ('Giant', '', 34, 10, 4, 4, 2, 6, CURRENT_TIMESTAMP, 1);
+VALUES ('Giant', 'Huge, strong and tough', 34, 10, 4, 4, 2, 6, CURRENT_TIMESTAMP, 1);
 
 INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED) 
-VALUES ('Werewolf', '', 34, 7, 4, 7, 2, 4, CURRENT_TIMESTAMP, 1);
+VALUES ('Werewolf', 'Lonely, but agile and fierce', 34, 7, 4, 7, 2, 4, CURRENT_TIMESTAMP, 1);
 ````
 
 - Battles:
 ```` sql
 INSERT INTO BATTLES (NAME, DESCRIPTION, PLAYER1_NAME, PLAYER2_NAME, PLAYER1_CHARACTER_TYPE, PLAYER2_CHARACTER_TYPE, PLAYER1_CHARACTER_ID, PLAYER2_CHARACTER_ID, INITIATIVE, CREATED_AT, COMPLETED_AT, IS_FINISHED, WINNER) 
-VALUES ('Battle Mock', '', 'Rafael', 'Opponent', 'Hero', 'Monster', 1, 1, 'Player1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'Player1');
+VALUES ('Battle Mock', 'This is gonna be an epic battle', 'Rafael', 'Opponent', 'Hero', 'Monster', 1, 1, 'Player1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'Player1');
 
 INSERT INTO BATTLES (NAME, DESCRIPTION, PLAYER1_NAME, PLAYER2_NAME, PLAYER1_CHARACTER_TYPE, PLAYER2_CHARACTER_TYPE, PLAYER1_CHARACTER_ID, PLAYER2_CHARACTER_ID, INITIATIVE, CREATED_AT, COMPLETED_AT, IS_FINISHED, WINNER) 
-VALUES ('Second Battle', '', 'Barros', 'Villain', 'Hero', 'Monster', 3, 3, 'Player2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'Player1');
+VALUES ('War Battle', 'This is gonna be the most anticipated battle for centuries', 'Barros', 'Villain', 'Monster', 'Monster', 3, 3, 'Player2', CURRENT_TIMESTAMP, NULL, 0, NULL);
 ````
 
 - Battle Hits:
@@ -117,4 +117,7 @@ VALUES (1, 5, 30, 60, 5, 10, 16, 17, 25, 27, CURRENT_TIMESTAMP, 'Player1', NULL)
 
 INSERT INTO BATTLE_HITS (BATTLE_ID, TURN, PLAYER1_CURRENT_HEALTH_POINTS, PLAYER2_CURRENT_HEALTH_POINTS, PLAYER1_STRENGTH_POINTS, PLAYER2_STRENGTH_POINTS, TOTAL_ATTACK_VALUE, TOTAL_DEFENSE_VALUE, PLAYER1_DICES_VALUE, PLAYER2_DICES_VALUE, CREATED_AT, ATTACKER, DAMAGE)
 VALUES (1, 6, -10, 60, 5, 10, 8, 5, 14, 30, CURRENT_TIMESTAMP, 'Player2', 40);
+
+INSERT INTO BATTLE_HITS (BATTLE_ID, TURN, PLAYER1_CURRENT_HEALTH_POINTS, PLAYER2_CURRENT_HEALTH_POINTS, PLAYER1_STRENGTH_POINTS, PLAYER2_STRENGTH_POINTS, TOTAL_ATTACK_VALUE, TOTAL_DEFENSE_VALUE, PLAYER1_DICES_VALUE, PLAYER2_DICES_VALUE, CREATED_AT, ATTACKER, DAMAGE) 
+VALUES (2, 0, 150, 250, 15, 25, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, NULL, NULL);
 ````
