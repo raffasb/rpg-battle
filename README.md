@@ -5,60 +5,64 @@ Back-end for RPG battle application using Java, Spring Boot and H2 database.
 
 ![Cover: API REST Java Spring Boot](/assets/images/cover.png)
 
-### Environment:
-* Java 17 SDK (required)
-* IntelliJ IDEA Community Edition (suggested)
-* H2 Database (automatically created when application is started)
+## Environment:
+- Java 17 SDK (required)
+- IntelliJ IDEA Community Edition (suggested)
+- H2 Database (automatically created when application is started)
 
-### How to access the back-end:
-* Swagger: http://localhost:8080/swagger-ui/index.html
-* H2 database: http://localhost:8080/h2
+## How to access the back-end:
+- Swagger: http://localhost:8080/swagger-ui/index.html
+- H2 database: http://localhost:8080/h2
 
-### How to run the back-end application:
-* Clone the source code to your local workspace
-* Open the project in your IDE
-* Load the Maven dependencies
-* Setup the startup settings to point out to "com.avanade.rpgbattle.RpgbattleApplication" class
-* Run the application in your IDE
-* *Note: If it is the first time you are running the application, please also follow the steps mentioned in the section "How to load initial settings in the H2 database"*
+## How to run the back-end application:
+- Clone the source code to your local workspace
+- Open the project in your IDE
+- Load the Maven dependencies
+- Set up the startup settings to point out to the class ```com.avanade.rpgbattle.RpgbattleApplication```
+- Run the application in your IDE
+- *Note: If it is the first time you are running the application, please also follow the steps mentioned in the section "How to load initial settings in the H2 database"*
 
-### How to play the game:
+## How to play the game:
 
-#### Game Flow
+### Game Flow
 
-* POST /api/battles
-* POST /api/battles/{id}/initiative
-* Looping:
-  * POST /api/dices/throw
-  * POST /api/battles/{id}/attack
-  * POST /api/dices/throw
-  * POST /api/battles/{id}/defense
-  * POST /api/battles/{id}/damage
-  * GET /api/battles/{id}
+- POST /api/battles
+- POST /api/battles/{id}/initiative
+- *Looping:*
+  - POST /api/dices/throw
+  - POST /api/battles/{id}/attack
+  - POST /api/dices/throw
+  - POST /api/battles/{id}/defense
+  - POST /api/battles/{id}/damage
+  - *Check if battle is finished:*
+    - GET /api/battles/{id}
 
-#### Management Flow
+### Management Flow
 
-* GET /api/battles
-* GET /api/battles/{id}/logs
-* GET /api/heroes
-* GET /api/heroes/{id}
-* PUT /api/heroes
-* POST /api/heroes
-* DELETE /api/heroes/{id}
-* GET /api/monsters
-* GET /api/monsters/{id}
-* PUT /api/monsters
-* POST /api/monsters
-* DELETE /api/monsters/{id}
+- Battles:
+  - GET /api/battles
+  - GET /api/battles/{id}/logs
+- Heroes:
+  - GET /api/heroes
+  - GET /api/heroes/{id}
+  - PUT /api/heroes
+  - POST /api/heroes
+  - DELETE /api/heroes/{id}
+- Monsters:
+  - GET /api/monsters
+  - GET /api/monsters/{id}
+  - PUT /api/monsters
+  - POST /api/monsters
+  - DELETE /api/monsters/{id}
 
-### Database Modeling
+## Database Modeling
 
-TODO
+![Database Modeling](/assets/images/database-diagram.png)
 
-### How to load initial settings in the H2 database: 
+## How to load initial settings in the H2 database: 
 The following SQL Scripts should be executed only once in the database in order to preload the initial game settings and default data:
 
-* Heroes:
+- Heroes:
 ```` sql
 INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED)
 VALUES ('Warrior', '', 20, 7, 5, 6, 1, 12, CURRENT_TIMESTAMP, 1);
@@ -70,7 +74,7 @@ INSERT INTO HEROES (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_P
 VALUES ('Knight', '', 26, 6, 8, 3, 2, 6, CURRENT_TIMESTAMP, 1);
 ````
 
-* Monsters:
+- Monsters:
 ```` sql
 INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE_POINTS, AGILITY_POINTS, DICE_QUANTITY, DICE_FACES, CREATED_AT, IS_SYSTEM_GENERATED) 
 VALUES ('Orc', '', 42, 7, 1, 2, 3, 4, CURRENT_TIMESTAMP, 1);
@@ -82,7 +86,7 @@ INSERT INTO MONSTERS (NAME, DESCRIPTION, HEALTH_POINTS, STRENGTH_POINTS, DEFENSE
 VALUES ('Werewolf', '', 34, 7, 4, 7, 2, 4, CURRENT_TIMESTAMP, 1);
 ````
 
-* Battles:
+- Battles:
 ```` sql
 INSERT INTO BATTLES (NAME, DESCRIPTION, PLAYER1_NAME, PLAYER2_NAME, PLAYER1_CHARACTER_TYPE, PLAYER2_CHARACTER_TYPE, PLAYER1_CHARACTER_ID, PLAYER2_CHARACTER_ID, INITIATIVE, CREATED_AT, COMPLETED_AT, IS_FINISHED, WINNER) 
 VALUES ('Battle Mock', '', 'Rafael', 'Opponent', 'Hero', 'Monster', 1, 1, 'Player1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'Player1');
@@ -91,7 +95,7 @@ INSERT INTO BATTLES (NAME, DESCRIPTION, PLAYER1_NAME, PLAYER2_NAME, PLAYER1_CHAR
 VALUES ('Second Battle', '', 'Barros', 'Villain', 'Hero', 'Monster', 3, 3, 'Player2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'Player1');
 ````
 
-* Battle Hits:
+- Battle Hits:
 ```` sql
 INSERT INTO BATTLE_HITS (BATTLE_ID, TURN, PLAYER1_CURRENT_HEALTH_POINTS, PLAYER2_CURRENT_HEALTH_POINTS, PLAYER1_STRENGTH_POINTS, PLAYER2_STRENGTH_POINTS, TOTAL_ATTACK_VALUE, TOTAL_DEFENSE_VALUE, PLAYER1_DICES_VALUE, PLAYER2_DICES_VALUE, CREATED_AT, ATTACKER, DAMAGE) 
 VALUES (1, 0, 100, 200, 5, 10, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, NULL, NULL);

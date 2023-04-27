@@ -1,6 +1,8 @@
 package com.avanade.rpgbattle.controller;
 
 import com.avanade.rpgbattle.model.Dice;
+import com.avanade.rpgbattle.model.dto.DiceThrowRequest;
+import com.avanade.rpgbattle.model.dto.DiceThrowResponse;
 import com.avanade.rpgbattle.service.DiceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +32,8 @@ public class DicesController {
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity<Integer> throwDices(@Valid @RequestBody Dice dice) {
-        return new ResponseEntity<>( service.throwDices( dice ), HttpStatus.OK );
+    public ResponseEntity<DiceThrowResponse> throwDices(@Valid @RequestBody DiceThrowRequest request) {
+        return new ResponseEntity<>( service.throwDices( new Dice(request.getQuantityOfDices(), request.getNumberOfFaces() )), HttpStatus.OK );
     }
 }
 

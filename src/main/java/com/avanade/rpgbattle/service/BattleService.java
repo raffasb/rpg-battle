@@ -92,12 +92,12 @@ public class BattleService {
         Integer player1DiceValue = 1;
         Integer player2DiceValue = 1;
 
-        Dice dice = new Dice(numberOfDices, numberOfFaces, -1);
+        Dice dice = new Dice(numberOfDices, numberOfFaces);
 
         do
         {
-            player1DiceValue = diceService.throwDices(dice);
-            player2DiceValue = diceService.throwDices(dice);
+            player1DiceValue = diceService.throwDices(dice).getDicesTotalValue();
+            player2DiceValue = diceService.throwDices(dice).getDicesTotalValue();
 
         } while ( player1DiceValue.equals(player2DiceValue) );
 
