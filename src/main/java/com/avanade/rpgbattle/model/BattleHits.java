@@ -31,16 +31,16 @@ public class BattleHits implements Serializable {
     private Integer turn;
 
     @Column( name = "PLAYER1_CURRENT_HEALTH_POINTS", nullable = false )
-    private Long player1CurrentHealthPoints;
+    private int player1CurrentHealthPoints;
 
     @Column( name = "PLAYER2_CURRENT_HEALTH_POINTS", nullable = false )
-    private Long player2CurrentHealthPoints;
+    private int player2CurrentHealthPoints;
 
     @Column( name = "PLAYER1_STRENGTH_POINTS", nullable = false )
-    private Long player1StrengthPoints;
+    private int player1StrengthPoints;
 
     @Column( name = "PLAYER2_STRENGTH_POINTS", nullable = false )
-    private Long player2StrengthPoints;
+    private int player2StrengthPoints;
 
     @Column( name = "PLAYER1_DICES_VALUE" )
     private Integer player1DicesValue;

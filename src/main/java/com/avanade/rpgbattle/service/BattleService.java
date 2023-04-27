@@ -5,8 +5,7 @@ import com.avanade.rpgbattle.enumeration.PlayerType;
 import com.avanade.rpgbattle.exception.InvalidInputException;
 import com.avanade.rpgbattle.exception.ResourceNotFoundException;
 import com.avanade.rpgbattle.model.*;
-import com.avanade.rpgbattle.model.dto.BattleAttackResponse;
-import com.avanade.rpgbattle.model.dto.BattleDefenseResponse;
+import com.avanade.rpgbattle.model.dto.*;
 import com.avanade.rpgbattle.repository.IBattleHitsRepository;
 import com.avanade.rpgbattle.repository.IBattleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +31,81 @@ public class BattleService {
     @Autowired
     private MonsterService monsterService;
 
-    public Battle create( @Valid Battle battle )
+    public BattleCreateResponse create( @Valid BattleCreateRequest request )
     {
+        Battle battle = new Battle();
+
+        battle.setName( request.getName() );
+        battle.setDescription( request.getDescription() );
+        battle.setPlayer1Name( request.getPlayer1Name() );
+        battle.setPlayer2Name( request.getPlayer2Name() );
+        battle.setPlayer1CharacterType( request.getPlayer1CharacterType() );
+        battle.setPlayer2CharacterType( request.getPlayer2CharacterType() );
+        battle.setPlayer1CharacterId( request.getPlayer1CharacterId() );
+        battle.setPlayer2CharacterId( request.getPlayer2CharacterId() );
+
         battle.setCreatedAt( LocalDateTime.now( ) );
         battle.setCompletedAt( null );
         battle.setIsFinished( false );
         battle.setWinner( null );
         battle.setInitiative( null );
 
-        return this.repository.save( battle );
+        Battle result = repository.save( battle );
+
+        createDefaultBattleHit( result );
+
+        return new BattleCreateResponse(result.getId(), result.getName(), result.getCreatedAt(), result.getIsFinished());
+    }
+
+    private BattleHits createDefaultBattleHit( @Valid Battle battle ) {
+
+        int player1HealthPoints = 0;
+        int player1StrengthPoints = 0;
+
+        if (battle.getPlayer1CharacterType() == CharacterType.Hero) {
+            Hero hero = heroService.findById( battle.getPlayer1CharacterId() );
+
+            player1HealthPoints = hero.getHealthPoints();
+            player1StrengthPoints = hero.getStrengthPoints();
+        }
+        else if (battle.getPlayer1CharacterType() == CharacterType.Monster) {
+            Monster monster = monsterService.findById( battle.getPlayer1CharacterId() );
+
+            player1HealthPoints = monster.getHealthPoints();
+            player1StrengthPoints = monster.getStrengthPoints();
+        }
+
+        int player2HealthPoints = 0;
+        int player2StrengthPoints = 0;
+
+        if (battle.getPlayer2CharacterType() == CharacterType.Hero) {
+            Hero hero = heroService.findById( battle.getPlayer2CharacterId() );
+
+            player2HealthPoints = hero.getHealthPoints();
+            player2StrengthPoints = hero.getStrengthPoints();
+        }
+        else if (battle.getPlayer2CharacterType() == CharacterType.Monster) {
+            Monster monster = monsterService.findById( battle.getPlayer2CharacterId() );
+
+            player2HealthPoints = monster.getHealthPoints();
+            player2StrengthPoints = monster.getStrengthPoints();
+        }
+
+        BattleHits battleHits = new BattleHits();
+
+        battleHits.setBattleId( battle.getId() );
+        battleHits.setTurn( 0 );
+        battleHits.setPlayer1CurrentHealthPoints( player1HealthPoints ) ;
+        battleHits.setPlayer2CurrentHealthPoints( player2HealthPoints ) ;
+        battleHits.setPlayer1StrengthPoints( player1StrengthPoints ) ;
+        battleHits.setPlayer2StrengthPoints( player2StrengthPoints ) ;
+        battleHits.setPlayer1DicesValue( null );
+        battleHits.setPlayer2DicesValue( null ) ;
+        battleHits.setAttacker( null ) ;
+        battleHits.setDamage( null ) ;
+        battleHits.setCreatedAt( battle.getCreatedAt() ) ;
+
+        return hitsRepository.save( battleHits );
     }
 
     public List<Battle> findAll( ) {
@@ -95,25 +160,37 @@ public class BattleService {
         battle.setInitiative( whoStarts );
         repository.save(battle);
 
-        Initiative initiative = new Initiative(battleId, player1DiceValue, player2DiceValue, whoStarts);
-
-        return initiative;
+        return new Initiative(battleId, player1DiceValue, player2DiceValue, whoStarts);
     }
 
-//    //TODO: This method may be removed
-//    public BattleStatus status( Long battleId )
-//    {
-//        return new BattleStatus();
-//    }
-
-    public int damage() {
+    public BattleDamageResponse damage(Long battleId, BattleDamageRequest request) {
 
         //TODO: Implement the business rules
 
-        return 1;
+
+        int attackerDicesValue = request.getAttackerDicesValue();
+        PlayerType attacker = request.getAttacker();
+
+        int defenderDicesValue = request.getDefenderDicesValue();
+        PlayerType defender = request.getDefender();
+
+
+        //TODO: Calculate the damage also considering the Strength attribute
+
+
+        //TODO: Insert entries in the BATTLE_HITS table
+
+
+        //TODO: Update entry in the BATTLES table (isFinished, winner, completedAt...)
+
+
+
+        int totalDamagePoints = -1;
+
+        return new BattleDamageResponse(totalDamagePoints);
     }
 
-    public BattleAttackResponse attack(Long battleId, int dicesValue, PlayerType attacker )
+    public BattleAttackResponse attack(Long battleId, BattleAttackRequest request)
     {
         int strengthPoints = 0;
         int agilityPoints = 0;
@@ -123,11 +200,11 @@ public class BattleService {
 
         Battle battle = findById( battleId );
 
-        if (attacker == PlayerType.Player1) {
+        if (request.getAttacker() == PlayerType.Player1) {
             characterId = battle.getPlayer1CharacterId();
             characterType = battle.getPlayer1CharacterType();
         }
-        else if (attacker == PlayerType.Player2) {
+        else if (request.getAttacker() == PlayerType.Player2) {
             characterId = battle.getPlayer2CharacterId();
             characterType = battle.getPlayer2CharacterType();
         }
@@ -147,12 +224,12 @@ public class BattleService {
 
         //TODO: Save data in database...
 
-        int totalAttackPoints = dicesValue + strengthPoints + agilityPoints;
+        int totalAttackPoints = request.getDicesValue() + strengthPoints + agilityPoints;
 
         return new BattleAttackResponse(totalAttackPoints);
     }
 
-    public BattleDefenseResponse defense(Long battleId, int dicesValue, PlayerType defender )
+    public BattleDefenseResponse defense(Long battleId, BattleDefenseRequest request )
     {
         int defensePoints = 0;
         int agilityPoints = 0;
@@ -162,11 +239,11 @@ public class BattleService {
 
         Battle battle = findById( battleId );
 
-        if (defender == PlayerType.Player1) {
+        if (request.getDefender() == PlayerType.Player1) {
             characterId = battle.getPlayer1CharacterId();
             characterType = battle.getPlayer1CharacterType();
         }
-        else if (defender == PlayerType.Player2) {
+        else if (request.getDefender() == PlayerType.Player2) {
             characterId = battle.getPlayer2CharacterId();
             characterType = battle.getPlayer2CharacterType();
         }
@@ -186,7 +263,7 @@ public class BattleService {
 
         //TODO: Save data in database...
 
-        int totalDefensePoints = dicesValue + defensePoints + agilityPoints;
+        int totalDefensePoints = request.getDicesValue() + defensePoints + agilityPoints;
 
         return new BattleDefenseResponse(totalDefensePoints);
     }
