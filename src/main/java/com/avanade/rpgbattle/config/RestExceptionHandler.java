@@ -25,7 +25,7 @@ public class RestExceptionHandler {
     }
 
     private ResponseEntity< ErrorMessage > handle( Exception ex, HttpStatus statusCode, String description, Map<String, String> validations ) {
-        var message = new ErrorMessage( statusCode, LocalDateTime.now( ), "Action required: fix the validations", description, validations );
+        var message = new ErrorMessage( statusCode, LocalDateTime.now( ), "Action Required: Fix the validations", description, validations );
         ex.printStackTrace( );
         return new ResponseEntity<>( message, message.getStatusCode( ) );
     }

@@ -1,10 +1,7 @@
 package com.avanade.rpgbattle.controller;
 
 import com.avanade.rpgbattle.model.*;
-import com.avanade.rpgbattle.model.dto.BattleAttackRequest;
-import com.avanade.rpgbattle.model.dto.BattleAttackResponse;
-import com.avanade.rpgbattle.model.dto.BattleDefenseRequest;
-import com.avanade.rpgbattle.model.dto.BattleDefenseResponse;
+import com.avanade.rpgbattle.model.dto.*;
 import com.avanade.rpgbattle.service.BattleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,8 +33,8 @@ public class BattlesController {
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< Battle > create( @Valid @RequestBody Battle battle ) {
-        return new ResponseEntity<>( service.create( battle ), HttpStatus.CREATED );
+    public ResponseEntity< BattleCreateResponse > create( @Valid @RequestBody BattleCreateRequest request ) {
+        return new ResponseEntity<>( service.create( request ), HttpStatus.CREATED );
     }
 
     @GetMapping( "" )
@@ -85,7 +82,7 @@ public class BattlesController {
     })
     public ResponseEntity< BattleAttackResponse > attack(@Valid @PathVariable( value = "id" ) @Min(1) Long battleId,
                                                          @Valid @RequestBody BattleAttackRequest request) {
-        return new ResponseEntity<>( service.attack( battleId, request.getDicesValue(), request.getAttacker() ), HttpStatus.OK );
+        return new ResponseEntity<>( service.attack( battleId, request ), HttpStatus.OK );
     }
 
     @PostMapping( "{id}/defense" )
@@ -98,7 +95,20 @@ public class BattlesController {
     })
     public ResponseEntity< BattleDefenseResponse > defense(@Valid @PathVariable( value = "id" ) @Min(1) Long battleId,
                                                            @Valid @RequestBody BattleDefenseRequest request) {
-        return new ResponseEntity<>( service.defense( battleId, request.getDicesValue(), request.getDefender() ), HttpStatus.OK );
+        return new ResponseEntity<>( service.defense( battleId, request ), HttpStatus.OK );
+    }
+
+    @PostMapping( "{id}/damage" )
+    @ApiOperation( "Calculate the possible damage from an attack based on a defense during the battle" )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Return the item"),
+        @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
+        @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
+        @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
+    })
+    public ResponseEntity< BattleDamageResponse > damage(@Valid @PathVariable( value = "id" ) @Min(1) Long battleId,
+                                                         @Valid @RequestBody BattleDamageRequest request) {
+        return new ResponseEntity<>( service.damage( battleId, request ), HttpStatus.OK );
     }
 
     @GetMapping( "{id}/logs" )
@@ -112,16 +122,4 @@ public class BattlesController {
     public ResponseEntity<List< BattleHits >> getAllBattleHitsLogs(@Valid @PathVariable( value = "id" ) @Min(1) Long battleId ) {
         return new ResponseEntity<>( service.findAllBattleHitsLogs( battleId ), HttpStatus.OK );
     }
-
-//    @GetMapping( "{id}/status" )
-//    @ApiOperation( "Return the attributes from attacker and defender in the battle" )
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Return the item"),
-//            @ApiResponse(code = 400, message = "Something went wrong on the informed payload"),
-//            @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
-//            @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
-//    })
-//    public ResponseEntity< BattleStatus > status(@Valid @PathVariable( value = "id" ) @Min(1) Long battleId ) {
-//        return new ResponseEntity<>( service.status( battleId ), HttpStatus.OK );
-//    }
 }
