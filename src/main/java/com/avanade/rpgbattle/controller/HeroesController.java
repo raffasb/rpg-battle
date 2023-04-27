@@ -71,7 +71,7 @@ public class HeroesController {
         return new ResponseEntity<>( service.update( hero ), HttpStatus.OK );
     }
 
-    @DeleteMapping( "" )
+    @DeleteMapping( "{id}" )
     @ApiOperation( "Delete a hero" )
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No content to return"),
@@ -79,7 +79,7 @@ public class HeroesController {
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< HttpStatus > delete( @Valid @RequestHeader Long heroId ) {
+    public ResponseEntity< HttpStatus > delete( @Valid @PathVariable( value = "id" ) @Min(1) Long heroId ) {
         service.delete( heroId );
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
     }

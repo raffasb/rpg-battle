@@ -71,7 +71,7 @@ public class MonstersController {
         return new ResponseEntity<>( service.update( monster ), HttpStatus.OK );
     }
 
-    @DeleteMapping( "" )
+    @DeleteMapping( "{id}" )
     @ApiOperation( "Delete a monster" )
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No content to return"),
@@ -79,7 +79,7 @@ public class MonstersController {
         @ApiResponse(code = 403, message = "You do not have permissions to access this resource"),
         @ApiResponse(code = 500, message = "Something went wrong on the server. Please contact your administrator"),
     })
-    public ResponseEntity< HttpStatus > delete( @Valid @RequestHeader Long monsterId ) {
+    public ResponseEntity< HttpStatus > delete( @Valid @PathVariable( value = "id" ) @Min(1) Long monsterId ) {
         service.delete( monsterId );
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
     }

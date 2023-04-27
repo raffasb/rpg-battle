@@ -63,6 +63,7 @@ public class Battle implements Serializable {
     @Column( name = "IS_FINISHED", nullable = false )
     private Boolean isFinished;
 
+    @Enumerated(EnumType.STRING)
     @Column( name = "WINNER" )
-    private String winner;
+    private PlayerType winner;
 }

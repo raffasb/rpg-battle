@@ -5,7 +5,9 @@ import com.avanade.rpgbattle.enumeration.PlayerType;
 import com.avanade.rpgbattle.exception.InvalidInputException;
 import com.avanade.rpgbattle.exception.ResourceNotFoundException;
 import com.avanade.rpgbattle.model.*;
-import com.avanade.rpgbattle.repository.IBattleLogRepository;
+import com.avanade.rpgbattle.model.dto.BattleAttackResponse;
+import com.avanade.rpgbattle.model.dto.BattleDefenseResponse;
+import com.avanade.rpgbattle.repository.IBattleHitsRepository;
 import com.avanade.rpgbattle.repository.IBattleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,11 @@ import java.util.List;
 @Service
 @Validated
 public class BattleService {
+
     @Autowired
     private IBattleRepository repository;
     @Autowired
-    private IBattleLogRepository logsRepository;
+    private IBattleHitsRepository hitsRepository;
     @Autowired
     private DiceService diceService;
     @Autowired
@@ -63,8 +66,8 @@ public class BattleService {
         return repository.save( battle );
     }
 
-    public List<BattleLog> findAllLogsByBattleId( Long battleId ) {
-        return logsRepository.findByBattleId( battleId );
+    public List<BattleHits> findAllBattleHitsLogs(Long battleId ) {
+        return hitsRepository.findByBattleIdOrderByTurnAsc( battleId );
     }
 
     public Initiative initiative( Long battleId )
@@ -82,14 +85,14 @@ public class BattleService {
             player1DiceValue = diceService.throwDices(dice);
             player2DiceValue = diceService.throwDices(dice);
 
-            //TODO: Log values to database...
+            //TODO: (informative only) Log values to database...
 
         } while (player1DiceValue != player2DiceValue);
 
         PlayerType whoStarts = player1DiceValue > player2DiceValue ? PlayerType.Player1 : PlayerType.Player2;
 
         Battle battle = findById( battleId );
-        battle.setInitiative(whoStarts);
+        battle.setInitiative( whoStarts );
         repository.save(battle);
 
         Initiative initiative = new Initiative(battleId, player1DiceValue, player2DiceValue, whoStarts);
@@ -97,24 +100,21 @@ public class BattleService {
         return initiative;
     }
 
-    public BattleStatus status( Long battleId )
-    {
-        return new BattleStatus();
-    }
+//    //TODO: This method may be removed
+//    public BattleStatus status( Long battleId )
+//    {
+//        return new BattleStatus();
+//    }
 
-    public int calculateHealthPoints() {
+    public int damage() {
+
+        //TODO: Implement the business rules
+
         return 1;
     }
 
-    public int attack( Long battleId, int diceValue, PlayerType attacker )
+    public BattleAttackResponse attack(Long battleId, int dicesValue, PlayerType attacker )
     {
-        //int numberOfDices = 1;
-        //int numberOfFaces = 12;
-
-        //Dice dice = new Dice(numberOfDices, numberOfFaces, -1);
-
-        //int diceValue = diceService.throwDices(dice);
-
         int strengthPoints = 0;
         int agilityPoints = 0;
 
@@ -147,28 +147,13 @@ public class BattleService {
 
         //TODO: Save data in database...
 
-        int totalAttackPoints = diceValue + strengthPoints + agilityPoints;
+        int totalAttackPoints = dicesValue + strengthPoints + agilityPoints;
 
-        return totalAttackPoints;
+        return new BattleAttackResponse(totalAttackPoints);
     }
 
-    public int defense( Long battleId, int diceValue, PlayerType defender )
+    public BattleDefenseResponse defense(Long battleId, int dicesValue, PlayerType defender )
     {
-//        int numberOfDices = 1;
-//        int numberOfFaces = 12;
-//
-//        Dice dice = new Dice(numberOfDices, numberOfFaces, -1);
-//
-//        int diceValue = diceService.throwDices(dice);
-//
-//        int defensePoints = 0;
-//        int agilityPoints = 0;
-//
-//        int result = diceValue + defensePoints + agilityPoints;
-//
-//
-//        return result;
-
         int defensePoints = 0;
         int agilityPoints = 0;
 
@@ -201,8 +186,8 @@ public class BattleService {
 
         //TODO: Save data in database...
 
-        int totalDefensePoints = diceValue + defensePoints + agilityPoints;
+        int totalDefensePoints = dicesValue + defensePoints + agilityPoints;
 
-        return totalDefensePoints;
+        return new BattleDefenseResponse(totalDefensePoints);
     }
 }

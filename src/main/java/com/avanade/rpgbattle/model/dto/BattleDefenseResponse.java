@@ -1,4 +1,4 @@
-package com.avanade.rpgbattle.model;
+package com.avanade.rpgbattle.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BattleStatus implements Serializable {
-
-    private Character player1;
-    private Character player2;
+public class BattleDefenseResponse implements Serializable {
+    private int totalDefenseValue;
 }
