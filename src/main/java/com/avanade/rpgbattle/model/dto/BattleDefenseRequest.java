@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -13,8 +14,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BattleDefenseRequest implements Serializable {
 
+    @NotNull
     @Min(1)
-    private int dicesValue;
+    private Integer dicesValue;
 
+    @NotNull
     private PlayerType defender;
 }

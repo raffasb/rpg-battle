@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface IBattleHitsRepository extends JpaRepository<BattleHits, Long> {
     List<BattleHits> findByBattleIdOrderByTurnAsc(Long battleId);
+    BattleHits findFirstByBattleIdOrderByTurnDesc(Long battleId);
 }
