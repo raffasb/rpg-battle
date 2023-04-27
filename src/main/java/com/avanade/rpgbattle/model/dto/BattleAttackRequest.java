@@ -1,4 +1,4 @@
-package com.avanade.rpgbattle.model;
+package com.avanade.rpgbattle.model.dto;
 
 import com.avanade.rpgbattle.enumeration.PlayerType;
 import lombok.AllArgsConstructor;
@@ -11,14 +11,10 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Initiative implements Serializable {
+public class BattleAttackRequest implements Serializable {
 
     @Min(1)
-    private Long battleId;
+    private int dicesValue;
 
-    private int player1DiceValue;
-
-    private int player2DiceValue;
-
-    private PlayerType whoStarts;
+    private PlayerType attacker;
 }
